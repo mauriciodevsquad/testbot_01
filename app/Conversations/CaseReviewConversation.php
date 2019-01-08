@@ -63,6 +63,9 @@ class CaseReviewConversation extends Conversation
                     $this->ask($question3, function (Answer $answer) {
                         if ($answer->getValue() === 'yes') {
 
+                            global $answer3;
+                            $answer3 = 'yes';
+
                             $question6 = Question::create("Ouch, sorry to hear that. How were you injured?")
                                 ->fallback('Unable to ask question')
                                 ->addButtons([
@@ -70,13 +73,18 @@ class CaseReviewConversation extends Conversation
                                     Button::create('Semi-Truck Accident')->value('semi'),
                                     Button::create('Dog Bite')->value('dog'),
                                     Button::create('Slip & Fall')->value('slip'),
-                                    Button::create('Motorcycle Accident')->value('motocycle'),
+                                    Button::create('Motorcycle Accident')->value('motorcycle'),
                                     Button::create('Other')->value('other'),
                                 ]);
 
                             $this->ask($question6, function (Answer $answer) {
                                 if ($answer->isInteractiveMessageReply()) {
+
+                                    global $answer6;
+                                    $answer6 = $answer->getValue();
+
                                     if ($answer->getValue() === 'other') {
+
 
                                         $question7 = Question::create("How were you injured?")
                                             ->fallback('Unable to ask question')
@@ -85,6 +93,9 @@ class CaseReviewConversation extends Conversation
                                             ]);
 
                                         $this->ask($question7, function (Answer $answer) {
+
+                                            global $answer7;
+                                            $answer7 = $answer->getValue();
 
                                         });
                                     }
@@ -98,6 +109,9 @@ class CaseReviewConversation extends Conversation
 
                                     $this->ask($question8, function (Answer $answer) {
 
+                                        global $answer8;
+                                        $answer8 = $answer->getValue();
+
                                         $question9 = Question::create("Were you at fault for the accident?")
                                             ->fallback('Unable to ask question')
                                             ->addButtons([
@@ -107,6 +121,10 @@ class CaseReviewConversation extends Conversation
 
                                         $this->ask($question9, function (Answer $answer) {
 
+                                            global $answer9;
+                                            $answer9 = $answer->getValue();
+
+
                                             $question10 = Question::create("Did the accident happen within the last 4 years?")
                                                 ->fallback('Unable to ask question')
                                                 ->addButtons([
@@ -115,6 +133,9 @@ class CaseReviewConversation extends Conversation
                                                 ]);
 
                                             $this->ask($question10, function (Answer $answer) {
+
+                                                global $answer10;
+                                                $answer10 = $answer->getValue();
 
                                                 $question11 = Question::create("Did anyone involved in the accident have insurance?")
                                                     ->fallback('Unable to ask question')
@@ -126,6 +147,10 @@ class CaseReviewConversation extends Conversation
 
                                                 $this->ask($question11, function (Answer $answer) {
 
+                                                    global $answer11;
+                                                    $answer11 = $answer->getValue();
+
+
                                                     $question12 = Question::create("Sounds like you might have a case! Would you like to find out how much your case could be worth?")
                                                         ->fallback('Unable to ask question')
                                                         ->addButtons([
@@ -134,6 +159,9 @@ class CaseReviewConversation extends Conversation
 
                                                     $this->ask($question12, function (Answer $answer) {
 
+                                                        global $answer12;
+                                                        $answer12 = $answer->getValue();
+
                                                         $question13 = Question::create("What is your name?")
                                                             ->fallback('Unable to ask question')
                                                             ->addButtons([
@@ -141,6 +169,7 @@ class CaseReviewConversation extends Conversation
                                                             ]);
 
                                                         $this->ask($question13, function (Answer $answer) {
+
 
                                                             $question14 = Question::create("What's your best email?")
                                                                 ->fallback('Unable to ask question')
@@ -172,6 +201,10 @@ class CaseReviewConversation extends Conversation
 
 
                         } else {
+
+                            global $answer3;
+                            $answer3 = 'no';
+
                             $question4 = Question::create("Would you like to send us a message about your situation? Perhaps we can refer you to the right person.")
                                 ->fallback('Unable to ask question')
                                 ->addButtons([
@@ -179,6 +212,9 @@ class CaseReviewConversation extends Conversation
                                     Button::create('No')->value('no'),
                                 ]);
                             $this->ask($question4, function (Answer $answer) {
+
+                                global $answer4;
+                                $answer4 = $answer->getValue();
 
                                 if ($answer->getValue() === 'yes') {
 
@@ -218,6 +254,11 @@ class CaseReviewConversation extends Conversation
                     });
 
                 } else {
+
+                    global $answer1;
+                    $answer1 = 'I have a question';
+
+
                     $question2 = Question::create("What is your question? Let us know and we'll get back to you as soon as possible with an answer!")
                         ->fallback('Unable to ask question')
                         ->addButtons([
@@ -225,6 +266,8 @@ class CaseReviewConversation extends Conversation
                         ]);
 
                     $this->ask($question2, function () {
+
+
                         $question13 = Question::create("What is your name?")
                             ->fallback('Unable to ask question')
                             ->addButtons([
@@ -257,6 +300,10 @@ class CaseReviewConversation extends Conversation
                 }
             }
         });
+
+
+
+
     }
 
     /**
